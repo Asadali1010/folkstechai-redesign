@@ -1,6 +1,7 @@
 import Hero from '@/components/Hero';
 import Services from '@/components/Services';
 import Work from '@/components/Work';
+import Why from '@/components/Why';
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
       <Hero />
       <Services />
       <Work />
+      <Why />
     </>
   );
 }
