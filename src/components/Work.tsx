@@ -1,6 +1,12 @@
+import { useEffect, useRef } from 'react';
 import { Stethoscope, Building2, Landmark } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useInView } from '@/hooks/useInView';
+
+// Free-to-use, no-attribution-required stock clip (Pexels License) — an
+// abstract particle loop, not literal scene footage, so it can't be mistaken
+// for a real product demo of illustrative concept work.
+const WORK_VIDEO_SRC = 'https://videos.pexels.com/video-files/29919008/12841733_1920_1080_30fps.mp4';
 
 const PROJECTS: {
   icon: LucideIcon;
@@ -60,11 +66,18 @@ function ProjectRow({
   reversed: boolean;
 }) {
   const { ref, inView } = useInView<HTMLDivElement>();
+  const videoRef = useRef<HTMLVideoElement>(null);
   const Icon = project.icon;
   const tintGradient =
     project.tint === 'blue'
       ? 'radial-gradient(120% 100% at 20% 0%, rgba(59,130,246,0.28), transparent 65%)'
       : 'radial-gradient(120% 100% at 20% 0%, rgba(239,68,68,0.24), transparent 65%)';
+
+  useEffect(() => {
+    if (inView) {
+      videoRef.current?.play().catch(() => {});
+    }
+  }, [inView]);
 
   return (
     <div
@@ -78,23 +91,30 @@ function ProjectRow({
           inView ? 'opacity-100 scale-100' : 'opacity-0 scale-[1.04]'
         }`}
       >
-        <div
-          className="relative aspect-[4/3] rounded-[20px] sm:rounded-[24px] border border-white/[0.08] overflow-hidden flex items-center justify-center"
-          style={{ backgroundImage: `${tintGradient}, linear-gradient(180deg, rgba(17,16,15,0.6), rgba(17,16,15,0.6))` }}
-        >
+        <div className="relative aspect-[4/3] rounded-[20px] sm:rounded-[24px] border border-white/[0.08] overflow-hidden bg-[#0A0C18]">
+          {inView && (
+            <video
+              ref={videoRef}
+              className="absolute inset-0 w-full h-full object-cover opacity-60"
+              src={WORK_VIDEO_SRC}
+              autoPlay
+              loop
+              muted
+              playsInline
+              aria-hidden="true"
+            />
+          )}
           <div
-            className="absolute inset-0 opacity-[0.08]"
-            style={{
-              backgroundImage:
-                'linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)',
-              backgroundSize: '28px 28px',
-            }}
+            className="absolute inset-0"
+            style={{ backgroundImage: `${tintGradient}, linear-gradient(180deg, rgba(10,12,24,0.35), rgba(10,12,24,0.55))` }}
             aria-hidden="true"
           />
           <span className="absolute top-4 left-4 sm:top-5 sm:left-5 px-3 py-1.5 rounded-[8px] bg-black/50 backdrop-blur-[10px] border border-white/[0.1] text-white/80 text-[11px] font-[450] tracking-[0.04em] uppercase">
             Illustrative concept
           </span>
-          <Icon className="w-16 h-16 sm:w-20 sm:h-20 text-white/70" strokeWidth={1} aria-hidden="true" />
+          <div className="absolute bottom-4 right-4 sm:bottom-5 sm:right-5 w-11 h-11 sm:w-12 sm:h-12 rounded-[12px] bg-black/50 backdrop-blur-[10px] border border-white/[0.1] flex items-center justify-center">
+            <Icon className="w-5 h-5 sm:w-[22px] sm:h-[22px] text-white/80" strokeWidth={1.6} aria-hidden="true" />
+          </div>
         </div>
       </div>
 
