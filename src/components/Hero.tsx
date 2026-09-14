@@ -5,10 +5,10 @@ import { Menu, X } from 'lucide-react';
 const NAV_LINKS = ['Services', 'Work', 'Process', 'FAQs'];
 
 const PROCESS_STEPS = [
-  { title: 'Discover', description: 'Understand your goals and requirements' },
-  { title: 'Design', description: 'Plan the experience and technical approach' },
-  { title: 'Build', description: 'Develop and test the product' },
-  { title: 'Launch', description: 'Ship it and support what comes next' },
+  { title: 'Discover', description: 'We map your problem, users, data, and constraints in a focused kickoff' },
+  { title: 'Prototype', description: 'A working prototype in days so you can react to something real — not slides' },
+  { title: 'Build & Test', description: 'Test-driven development with automated CI and security scans on every change' },
+  { title: 'Ship & Iterate', description: 'Continuous deployment and rapid changes as your requirements evolve' },
 ];
 
 function Animate({
