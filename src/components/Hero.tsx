@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-import { ChevronDown, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
-const BAR_HEIGHTS = [
-  23, 40, 53, 40, 33, 14, 7, 17, 75, 65,
-  88, 75, 65, 47, 33, 88, 4, 7, 9, 14,
-  95, 65, 79, 37, 7, 40, 17, 20, 62, 47,
-  92, 72,
+const NAV_LINKS = ['Services', 'Work', 'Process', 'FAQs'];
+
+const PROCESS_STEPS = [
+  { title: 'Discover', description: 'Understand your goals and requirements' },
+  { title: 'Design', description: 'Plan the experience and technical approach' },
+  { title: 'Build', description: 'Develop and test the product' },
+  { title: 'Launch', description: 'Ship it and support what comes next' },
 ];
 
 function Animate({
@@ -38,67 +40,36 @@ function Animate({
   );
 }
 
-function RevenueCard() {
-  const maxHeight = Math.max(...BAR_HEIGHTS);
-
+function ProcessCard() {
   return (
     <Animate delay={900} direction="scale" className="w-full max-w-[405px] mx-auto lg:mx-0">
       <div className="w-full rounded-[24px] sm:rounded-[33px] bg-[rgba(17,16,15,0.35)] backdrop-blur-[20px] p-5 sm:p-8 pb-5 sm:pb-6">
-        <p className="text-white text-[16px] sm:text-[20px] font-[450] leading-[20px] mb-3 sm:mb-4">
-          Revenue Growth
+        <p className="text-white text-[20px] sm:text-[26px] font-[450] leading-[1.15] mb-2 sm:mb-3">
+          From idea to production
         </p>
-        <p className="mb-2 sm:mb-3">
-          <span className="text-white text-[28px] sm:text-[46px] font-[450] leading-[1]">$14,205,890</span>
-          <span className="text-white/20 text-[28px] sm:text-[46px] font-[450] leading-[1]">.00</span>
+        <p className="text-white/80 text-[13px] sm:text-[15px] font-[450] leading-[1.4] mb-7 sm:mb-9 max-w-[300px]">
+          A clear path from first conversation to a working product.
         </p>
-        <div className="flex items-center gap-[10px] mb-6 sm:mb-8">
-          <span className="px-[6px] py-[7px] bg-white/20 rounded-[6px] text-white text-[12px] sm:text-[14px] font-[450] leading-[14px]">
-            +32.4%
-          </span>
-          <span className="text-white/80 text-[12px] sm:text-[14px] font-[450] leading-[14px] opacity-70">
-            vs. previous period ($10.7M)
-          </span>
-        </div>
 
-        <div className="relative" role="img" aria-label="Revenue chart with 32 bars; the final four bars are projections. Revenue grew 32.4 percent to 14,205,890 dollars.">
-          <div className="flex items-end gap-[1.5px] h-[80px] sm:h-[100px]">
-            {BAR_HEIGHTS.map((h, i) => {
-              const isProjected = i >= 28;
-              const heightPercent = (h / maxHeight) * 100;
-              return (
-                <div
-                  key={i}
-                  className="flex-1 rounded-[0.5px] animate-bar-grow origin-bottom"
-                  style={{
-                    height: `${heightPercent}%`,
-                    backgroundColor: isProjected ? 'rgba(255,255,255,0.1)' : 'white',
-                    animationDelay: `${1100 + i * 30}ms`,
-                  }}
-                />
-              );
-            })}
-          </div>
-          <div className="absolute inset-0 pointer-events-none">
-            {[0, 1, 2, 3, 4].map((i) => (
-              <div
-                key={i}
-                className="absolute top-0 bottom-0 w-px bg-white/10"
-                style={{ left: `${((i + 1) / 5) * 100}%` }}
-              />
-            ))}
-          </div>
-          <div className="flex justify-between mt-3">
-            {['10:00', '12:00', '14:00', '16:00', '16:00'].map((time, i) => (
-              <span
-                key={i}
-                className="text-[9px] sm:text-[10px] font-[450] leading-[10px] text-white/80"
-                style={{ opacity: i >= 3 ? 0.4 : 1 }}
-              >
-                {time}
-              </span>
-            ))}
-          </div>
-        </div>
+        <ol className="relative flex flex-col gap-5 sm:gap-6 pl-8 sm:pl-9">
+          <div className="absolute left-[5px] sm:left-[6px] top-[6px] bottom-[6px] w-px bg-white/10" aria-hidden="true" />
+          <div
+            className="absolute left-[5px] sm:left-[6px] top-[6px] bottom-[6px] w-px bg-white/50 origin-top animate-bar-grow"
+            style={{ animationDelay: '1300ms', animationDuration: '900ms' }}
+            aria-hidden="true"
+          />
+          {PROCESS_STEPS.map((step, i) => (
+            <li
+              key={step.title}
+              className="relative opacity-0 animate-fade-up"
+              style={{ animationDelay: `${1200 + i * 120}ms` }}
+            >
+              <span className="absolute -left-8 sm:-left-9 top-[2px] w-[11px] h-[11px] rounded-full bg-white" aria-hidden="true" />
+              <p className="text-white text-[15px] sm:text-[17px] font-[450] leading-[1.2]">{step.title}</p>
+              <p className="text-white/70 text-[12px] sm:text-[13px] font-[450] leading-[1.35] mt-0.5">{step.description}</p>
+            </li>
+          ))}
+        </ol>
       </div>
     </Animate>
   );
@@ -123,34 +94,32 @@ export default function Hero() {
             <div className="max-w-[593px]">
               <Animate delay={300} direction="up">
                 <h1 className="text-white text-[36px] sm:text-[52px] md:text-[64px] lg:text-[72px] font-normal leading-[0.95] mb-5 sm:mb-8">
-                  Elevate your essential data to new heights
+                  Build smarter software. Move your business forward.
                 </h1>
               </Animate>
               <Animate delay={500} direction="up">
                 <p className="text-white/80 text-[16px] sm:text-[18px] md:text-[20px] font-[450] leading-[1.3] max-w-[370px] mb-7 sm:mb-10">
-                  Advanced reasoning systems and predictive models built for the unknown
+                  Custom software, web and mobile applications, and AI automation built around your business.
                 </p>
               </Animate>
               <Animate delay={700} direction="up">
                 <div className="flex flex-wrap gap-3 sm:gap-4">
-                  <button
-                    type="button"
-                    className="h-[46px] sm:h-[51px] px-5 sm:px-[27px] bg-[#E9E9E9] rounded-[12px] text-[#0A0707] text-[14px] sm:text-[15.5px] font-[450] leading-[15.5px] transition-opacity hover:opacity-90"
-                    onClick={() => { window.location.href = 'mailto:hello@folkstechai.com?subject=Book%20an%20Apogee%20demo'; }}
+                  <a
+                    href="#contact"
+                    className="inline-flex items-center justify-center h-[46px] sm:h-[51px] px-5 sm:px-[27px] bg-[#E9E9E9] rounded-[12px] text-[#0A0707] text-[14px] sm:text-[15.5px] font-[450] leading-[15.5px] transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                   >
-                    Book a demo
-                  </button>
-                  <button
-                    type="button"
-                    className="h-[46px] sm:h-[51px] px-5 sm:px-[27px] rounded-[12px] border border-white text-white text-[14px] sm:text-[15.5px] font-[450] leading-[15.5px] transition-opacity hover:opacity-80"
-                    onClick={() => { window.location.href = 'mailto:hello@folkstechai.com?subject=Talk%20with%20the%20Apogee%20team'; }}
+                    Book a consultation
+                  </a>
+                  <a
+                    href="#services"
+                    className="inline-flex items-center justify-center h-[46px] sm:h-[51px] px-5 sm:px-[27px] rounded-[12px] border border-white text-white text-[14px] sm:text-[15.5px] font-[450] leading-[15.5px] transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                   >
-                    Talk with the team
-                  </button>
+                    Explore our services
+                  </a>
                 </div>
               </Animate>
             </div>
-            <RevenueCard />
+            <ProcessCard />
           </div>
         </div>
       </div>
@@ -170,46 +139,53 @@ function Nav() {
     return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsOpen(false);
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [isOpen]);
+
   return (
     <>
       <nav className="w-full max-w-[1800px] mx-auto px-5 sm:px-8 md:px-[82px] pt-[20px] sm:pt-[30px] flex items-center justify-between relative z-50" aria-label="Main navigation">
         <Animate delay={0} direction="down">
-          <div className="flex items-center gap-2.5">
-            <svg width="28" height="28" viewBox="0 0 256 256" fill="none" className="sm:w-[32px] sm:h-[32px]" aria-hidden="true">
-              <path fill="white" d="M 256 256 L 178 256 C 150.386 256 128 233.614 128 206 L 128 256 L 0 256 L 0 192 C 0 156.654 28.654 128 64 128 C 99.346 128 128 156.654 128 192 L 128 128 L 256 128 Z M 78 0 C 105.614 0 128 22.386 128 50 L 128 0 L 256 0 L 256 64 C 256 99.346 227.346 128 192 128 C 156.654 128 128 64 L 128 128 L 0 128 L 0 0 Z" />
-            </svg>
-            <span className="text-white text-[22px] sm:text-[26px] font-[450] leading-none tracking-[-0.02em]">
-              Apogee
-            </span>
-          </div>
+          <a href="#" className="text-white text-[20px] sm:text-[24px] font-[450] leading-none tracking-[-0.02em] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white rounded-sm">
+            FolksTechAI
+          </a>
         </Animate>
 
         <Animate delay={100} direction="down" className="hidden lg:block">
           <div className="h-[52px] px-6 flex items-center gap-[30px] bg-[rgba(10,7,7,0.35)] rounded-[11px] backdrop-blur-[17px]">
-            <button type="button" className="flex items-center gap-[5px] text-white/80 text-[14px] font-[450] leading-[14px] hover:text-white transition-colors">
-              Platform
-              <ChevronDown className="w-[10px] h-[10px] opacity-80" />
-            </button>
-            {['Pricing', 'Resources', 'Blog'].map((label) => (
-              <span key={label} className="text-white/80 text-[14px] font-[450] leading-[14px] hover:text-white transition-colors cursor-pointer">
+            {NAV_LINKS.map((label) => (
+              <a
+                key={label}
+                href={`#${label.toLowerCase()}`}
+                className="text-white/80 text-[14px] font-[450] leading-[14px] hover:text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white rounded-sm"
+              >
                 {label}
-              </span>
+              </a>
             ))}
           </div>
         </Animate>
 
         <Animate delay={200} direction="down" className="hidden lg:block">
           <div className="h-[52px] p-[3px] bg-[rgba(0,0,0,0.35)] rounded-[13px] backdrop-blur-[17px] flex items-center gap-[5px]">
-            <button type="button" className="h-[46px] px-6 rounded-[11px] text-white text-[14px] font-[450] leading-[14px] hover:bg-white/5 transition-colors">
-              Login
-            </button>
             <button
               type="button"
-              className="h-[46px] px-6 bg-[#E9E9E9] rounded-[11px] text-[#0A0707] text-[14px] font-[450] leading-[14px] hover:bg-white transition-colors"
-              onClick={() => { window.location.href = 'mailto:hello@folkstechai.com?subject=Book%20an%20Apogee%20demo'; }}
+              className="h-[46px] px-6 rounded-[11px] text-white text-[14px] font-[450] leading-[14px] hover:bg-white/5 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              onClick={() => { window.location.href = 'mailto:hello@folkstechai.com?subject=Hello%20FolksTechAI'; }}
             >
-              Book a demo
+              Contact
             </button>
+            <a
+              href="#contact"
+              className="inline-flex items-center justify-center h-[46px] px-6 bg-[#E9E9E9] rounded-[11px] text-[#0A0707] text-[14px] font-[450] leading-[14px] hover:bg-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            >
+              Book a consultation
+            </a>
           </div>
         </Animate>
 
@@ -234,7 +210,6 @@ function Nav() {
         id="mobile-menu"
         className={`lg:hidden fixed inset-0 z-40 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${isOpen ? 'visible' : 'invisible'}`}
         aria-hidden={!isOpen}
-        onKeyDown={(event) => { if (event.key === 'Escape') setIsOpen(false); }}
       >
         <div
           className={`absolute inset-0 bg-[#080A19]/90 backdrop-blur-[24px] transition-opacity duration-500 ${isOpen ? 'opacity-100' : 'opacity-0'}`}
@@ -242,16 +217,16 @@ function Nav() {
         />
         <div className={`absolute top-[76px] sm:top-[86px] left-4 right-4 sm:left-6 sm:right-6 bg-[rgba(17,16,15,0.6)] backdrop-blur-[30px] rounded-[20px] border border-white/[0.06] p-6 sm:p-8 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] origin-top ${isOpen ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 -translate-y-4 scale-[0.97]'}`}>
           <div className="flex flex-col gap-1">
-            {['Platform', 'Pricing', 'Resources', 'Blog'].map((label, i) => (
+            {NAV_LINKS.map((label, i) => (
               <a
                 key={label}
-                href="#"
+                href={`#${label.toLowerCase()}`}
                 className={`flex items-center justify-between px-4 py-4 rounded-[12px] text-white/90 text-[18px] font-[450] hover:bg-white/[0.06] transition-all duration-300 ${isOpen ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-3'}`}
                 style={{ transitionDelay: isOpen ? `${100 + i * 50}ms` : '0ms' }}
                 onClick={() => setIsOpen(false)}
+                tabIndex={isOpen ? 0 : -1}
               >
                 {label}
-                {label === 'Platform' && <ChevronDown className="w-4 h-4 opacity-50" />}
               </a>
             ))}
           </div>
@@ -260,15 +235,21 @@ function Nav() {
             className={`flex flex-col gap-3 transition-all duration-300 ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
             style={{ transitionDelay: isOpen ? '350ms' : '0ms' }}
           >
+            <a
+              href="#contact"
+              className="w-full h-[50px] flex items-center justify-center bg-[#E9E9E9] rounded-[12px] text-[#0A0707] text-[15px] font-[450] transition-colors hover:bg-white"
+              onClick={() => setIsOpen(false)}
+              tabIndex={isOpen ? 0 : -1}
+            >
+              Book a consultation
+            </a>
             <button
               type="button"
-              className="w-full h-[50px] bg-[#E9E9E9] rounded-[12px] text-[#0A0707] text-[15px] font-[450] transition-colors hover:bg-white"
-              onClick={() => { setIsOpen(false); window.location.href = 'mailto:hello@folkstechai.com?subject=Book%20an%20Apogee%20demo'; }}
+              className="w-full h-[50px] rounded-[12px] border border-white/30 text-white text-[15px] font-[450] transition-colors hover:bg-white/5"
+              onClick={() => { setIsOpen(false); window.location.href = 'mailto:hello@folkstechai.com?subject=Hello%20FolksTechAI'; }}
+              tabIndex={isOpen ? 0 : -1}
             >
-              Book a demo
-            </button>
-            <button type="button" className="w-full h-[50px] rounded-[12px] border border-white/30 text-white text-[15px] font-[450] transition-colors hover:bg-white/5">
-              Login
+              Contact
             </button>
           </div>
         </div>
