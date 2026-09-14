@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Code2, Smartphone, Sparkles, ShieldCheck } from 'lucide-react';
+import { Map, Code2, Bot, BarChart3, Rocket, RefreshCw } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import Reveal from '@/components/Reveal';
 import ServiceDialog from '@/components/ServiceDialog';
@@ -7,47 +7,64 @@ import { useInView } from '@/hooks/useInView';
 
 const SERVICES: { icon: LucideIcon; title: string; description: string; includes: string[] }[] = [
   {
+    icon: Map,
+    title: 'AI Enablement & Strategy',
+    description: 'A clear, no-hype roadmap to put AI to work on the problems that actually move your business.',
+    includes: [
+      'An honest look at where AI can help your business, and where it can’t',
+      'A prioritized roadmap tied to real problems, not trends',
+      'Guidance you can act on with or without us building it',
+    ],
+  },
+  {
     icon: Code2,
     title: 'Custom Software Development',
     description:
-      'Software built around how your business actually works, not the other way around — internal tools, dashboards, and platforms tailored to your workflow.',
+      'Tailored web, mobile, and cloud applications built around your exact workflow · AI-native where it counts.',
     includes: [
-      'A working understanding of your current process before any code is written',
-      'Software scoped to the problem you actually have, not a generic template',
-      "Clear documentation so the system doesn't depend on any one person",
+      'Software scoped to your actual workflow, not a generic template',
+      'AI woven in only where it genuinely helps, never for its own sake',
+      'Clear documentation so the system doesn’t depend on any one person',
     ],
   },
   {
-    icon: Smartphone,
-    title: 'Web & Mobile Applications',
-    description:
-      'Websites and apps for the browser, iOS, and Android, built to be fast, easy to use, and straightforward to maintain as your product grows.',
+    icon: Bot,
+    title: 'AI Agents & Automation',
+    description: 'Put AI agents and workflow automation to work on your most repetitive, time-draining operations.',
     includes: [
-      'A single codebase approach where it makes sense, to keep cost and maintenance down',
-      'Interfaces designed to be simple for your actual users, not just impressive in a demo',
-      'Built to perform well on real devices and real connections',
-    ],
-  },
-  {
-    icon: Sparkles,
-    title: 'AI & Automation',
-    description:
-      'We identify where AI and automation can remove manual, repetitive work, then build the integrations that make it part of your day-to-day operations.',
-    includes: [
-      "An honest assessment of where automation will and won't help, before we build anything",
-      'Integrations with the tools you already use, rather than a system that replaces them',
+      'An assessment of which repetitive tasks are worth automating first',
+      'Agents and automations integrated with the tools you already use',
       'Automations you can monitor and adjust, not a black box',
     ],
   },
   {
-    icon: ShieldCheck,
-    title: 'QA & Testing',
-    description:
-      'Every build is tested for functionality, performance, and edge cases before it reaches your users, with a clear report on what was checked.',
+    icon: BarChart3,
+    title: 'Data & Analytics',
+    description: 'Turn scattered data into pipelines, dashboards, and insight your team can act on with confidence.',
     includes: [
-      'Testing planned alongside development, not bolted on at the end',
-      'Coverage for everyday paths and the edge cases that usually get missed',
-      "A clear report of what was tested and what wasn't, so nothing is assumed",
+      'Data pipelines that bring scattered sources into one place',
+      'Dashboards built around the decisions your team actually makes',
+      'A foundation your team can keep building on after we’re done',
+    ],
+  },
+  {
+    icon: Rocket,
+    title: 'Rapid Delivery & Iteration',
+    description: 'Ship a working product in weeks, then evolve it continuously with fast, safe releases.',
+    includes: [
+      'A working version in weeks, not months, so you can start learning early',
+      'Short, safe release cycles instead of one big, risky launch',
+      'Room to adjust direction as real feedback comes in',
+    ],
+  },
+  {
+    icon: RefreshCw,
+    title: 'Legacy Modernization',
+    description: 'Migrate ageing systems to secure, maintainable, modern platforms with zero drama.',
+    includes: [
+      'A migration plan that protects your data and daily operations',
+      'Modern, maintainable platforms in place of fragile legacy systems',
+      'Minimal disruption to the people relying on the system today',
     ],
   },
 ];
@@ -128,12 +145,12 @@ export default function Services() {
             What we build for you
           </h2>
           <p className="text-white/80 text-[16px] sm:text-[18px] font-[450] leading-[1.4]">
-            Four core offerings, each scoped to your goals rather than sold as a fixed package.
-            Click any of them for more detail.
+            Each engagement is scoped to your goals rather than sold as a fixed package.
+            Click any service for more detail.
           </p>
         </Reveal>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {SERVICES.map((service, i) => (
             <ServiceCard
               key={service.title}
