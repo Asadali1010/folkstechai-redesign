@@ -130,6 +130,42 @@ body {
 .animate-backdrop-in { animation: backdrop-in 250ms ease-out forwards; }
 .animate-dialog-in   { animation: dialog-in 350ms cubic-bezier(0.32, 0.72, 0, 1) forwards; }
 
+/* How We Work: scroll-driven progress line + per-step spotlight highlight.
+   No scroll listener and no pinning — the fill line's growth and each step's
+   brightness are both driven by native CSS scroll timelines. Browsers
+   without support simply keep the line fully filled and steps fully
+   visible (the @supports block below never applies), so nothing breaks. */
+@supports (animation-timeline: view()) {
+  .how-we-work-track {
+    view-timeline-name: --how-we-work-progress;
+    view-timeline-axis: block;
+  }
+
+  .how-we-work-fill {
+    animation: how-we-work-fill-grow linear both;
+    animation-timeline: --how-we-work-progress;
+    animation-range: cover 0% cover 100%;
+  }
+
+  .how-we-work-step {
+    animation: how-we-work-spotlight linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+}
+
+@keyframes how-we-work-fill-grow {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+
+@keyframes how-we-work-spotlight {
+  0%   { opacity: 0.4; }
+  45%  { opacity: 1; }
+  55%  { opacity: 1; }
+  100% { opacity: 0.4; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-arc-left,
   .animate-arc-right {
@@ -152,5 +188,15 @@ body {
     animation: none !important;
     opacity: 1;
     transform: none;
+  }
+
+  .how-we-work-fill {
+    animation: none !important;
+    transform: scaleY(1) !important;
+  }
+
+  .how-we-work-step {
+    animation: none !important;
+    opacity: 1 !important;
   }
 }
