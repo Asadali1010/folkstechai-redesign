@@ -94,6 +94,7 @@ export default function FAQs() {
                     id={panelId}
                     role="region"
                     aria-labelledby={buttonId}
+                    aria-hidden={!isOpen}
                     className={`grid transition-[grid-template-rows] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none ${
                       isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
                     }`}
