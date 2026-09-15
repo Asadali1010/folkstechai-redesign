@@ -14,10 +14,10 @@
 .work-viewport::-webkit-scrollbar { display: none; }
 .work-track { position: relative; display: flex; gap: 28px; width: max-content; padding: 14px var(--work-inset); }
 .work-card { --scene-offset: 0; --scene-reveal: 1; flex: 0 0 auto; width: min(78vw, 1120px); scroll-snap-align: center; position: relative; }
-.work-card-surface { min-height: 416px; height: 100%; display: grid; grid-template-columns: .95fr 1.05fr; border: 1px solid #ffffff21; border-radius: 24px; overflow: hidden; position: relative; background: linear-gradient(120deg, #101923 0%, #12232c 56%, #153644 100%); box-shadow: inset 0 1px 0 #ffffff0a; }
-.work-card-intelligence .work-card-surface { background: linear-gradient(120deg,#101522,#172038 60%,#222e55); }
-.work-card-systems .work-card-surface { background: linear-gradient(120deg,#14141c,#252331 60%,#433244); }
-.work-card-possibility .work-card-surface { background: linear-gradient(120deg,#161b25,#263141 62%,#394c61); }
+.work-card-surface { min-height: 416px; height: 100%; display: grid; grid-template-columns: .95fr 1.05fr; border: 1px solid #ffffff28; border-radius: 24px; overflow: hidden; position: relative; background: linear-gradient(120deg, rgb(16 25 35 / 58%) 0%, rgb(18 35 44 / 52%) 56%, rgb(21 54 68 / 46%) 100%); -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px); box-shadow: 0 24px 60px #00000030, inset 0 1px 0 #ffffff16; }
+.work-card-intelligence .work-card-surface { background: linear-gradient(120deg, rgb(16 21 34 / 58%), rgb(23 32 56 / 52%) 60%, rgb(34 46 85 / 46%)); }
+.work-card-systems .work-card-surface { background: linear-gradient(120deg, rgb(20 20 28 / 58%), rgb(37 35 49 / 52%) 60%, rgb(67 50 68 / 46%)); }
+.work-card-possibility .work-card-surface { background: linear-gradient(120deg, rgb(22 27 37 / 58%), rgb(38 49 65 / 52%) 62%, rgb(57 76 97 / 46%)); }
 .work-card-copy { display: flex; flex-direction: column; justify-content: center; align-items: start; padding: clamp(26px, 3.2vw, 48px); min-width: 0; position: relative; z-index: 2; }
 .work-card-label { display: flex; gap: 14px; align-items: center; color: #cfdeec; font-size: .75rem; letter-spacing: .07em; text-transform: uppercase; margin-bottom: 28px; }
 .work-card-label > span { color: #a6c7df; font-variant-numeric: tabular-nums; }
@@ -228,4 +228,5 @@
 }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .work-glass { background-color: rgb(18 30 46 / 95%); }
+  .work-card-surface { background-color: rgb(14 22 32 / 96%); }
 }
