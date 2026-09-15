@@ -42,7 +42,7 @@ export default function Footer() {
         aria-hidden="true"
       />
       <div
-        className="absolute inset-0 bg-gradient-to-b from-[#0A0C18]/90 via-[#0A0C18]/85 to-[#0A0C18]/95"
+        className="absolute inset-0 bg-gradient-to-b from-[#0A0C18]/45 via-[#0A0C18]/35 to-[#0A0C18]/55"
         aria-hidden="true"
       />
       <div className="relative z-10 w-full max-w-[1800px] mx-auto px-5 sm:px-8 md:px-[82px] pt-16 sm:pt-20 pb-8">
