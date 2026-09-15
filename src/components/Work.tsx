@@ -1,6 +1,10 @@
 import { useShowcaseScroll } from '@/hooks/useShowcaseScroll';
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Bot, Check, Command, Database, FileText, Globe2, Layers3, LayoutGrid, MessageSquare, PanelLeft, Plus, ShieldCheck, SlidersHorizontal, Sparkles, Users, Workflow } from 'lucide-react';
+import { useEffect, useRef } from 'react';
 import './Work.css';
+
+const WORK_VIDEO_SRC =
+  'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260624_210218_173f8eba-17ff-4e27-972b-d128af25bf49.mp4';
 
 const POSSIBILITIES = [
   {
@@ -86,10 +90,41 @@ const SCENES = [ProductScene, IntelligenceScene, SystemsScene, PossibilityScene]
 
 export default function Work() {
   const { sectionRef, stageRef, viewportRef, trackRef, cardsRef, active, pinned, select } = useShowcaseScroll(POSSIBILITIES.length);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const video = videoRef.current;
+    if (!section || !video) return;
+
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let visible = false;
+    const syncPlayback = () => {
+      if (visible && !document.hidden && !motion.matches) video.play().catch(() => {});
+      else video.pause();
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      syncPlayback();
+    });
+    observer.observe(section);
+    motion.addEventListener('change', syncPlayback);
+    document.addEventListener('visibilitychange', syncPlayback);
+    return () => {
+      observer.disconnect();
+      motion.removeEventListener('change', syncPlayback);
+      document.removeEventListener('visibilitychange', syncPlayback);
+      video.pause();
+    };
+  }, [sectionRef]);
 
   return (
     <section ref={sectionRef} id="work" className="work-showcase" aria-labelledby="work-title" data-scroll={pinned}>
       <div ref={stageRef} className="work-stage">
+        <div className="work-backdrop" aria-hidden="true">
+          <video ref={videoRef} className="work-video" src={WORK_VIDEO_SRC} muted loop playsInline preload="none" />
+          <div className="work-video-shade" />
+        </div>
         <header className="work-header"><div><p className="work-eyebrow">Work / A world of possibilities</p><h2 id="work-title">What we can build<span>.</span></h2></div><p className="work-intro">Your ambition sets the brief.<br /><span>Let’s build what comes next.</span></p></header>
         <div ref={viewportRef} className="work-viewport">
           <div ref={trackRef} className="work-track">
