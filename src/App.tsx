@@ -7,6 +7,7 @@ import Why from '@/components/Why';
 import Team from '@/components/Team';
 import Process from '@/components/Process';
 import FAQs from '@/components/FAQs';
+import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import ScrollToTop from '@/components/ScrollToTop';
 import ChatWidget from '@/components/ChatWidget';
@@ -24,6 +25,7 @@ function App() {
       <Team />
       <Process />
       <FAQs />
+      <Contact />
       <Footer />
       <ScrollToTop hidden={chatOpen} />
       <ChatWidget onOpenChange={setChatOpen} />
