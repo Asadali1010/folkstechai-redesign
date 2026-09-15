@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Map, Code2, Bot, BarChart3, Rocket, RefreshCw } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import Hls from 'hls.js';
 import Reveal from '@/components/Reveal';
 import ServiceDialog from '@/components/ServiceDialog';
 import { useInView } from '@/hooks/useInView';
+
+const SERVICES_VIDEO_SRC = 'https://stream.mux.com/Jwr2RhmsNrd6GEspBNgm02vJsRZAGlaoQIh4AucGdASw.m3u8';
 
 const SERVICES: { icon: LucideIcon; title: string; description: string; includes: string[] }[] = [
   {
@@ -121,12 +124,48 @@ function ServiceCard({
 
 export default function Services() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const { ref: sectionRef, inView } = useInView<HTMLElement>();
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (!inView) return;
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (Hls.isSupported()) {
+      const hls = new Hls();
+      hls.loadSource(SERVICES_VIDEO_SRC);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        video.play().catch(() => {});
+      });
+      return () => hls.destroy();
+    }
+
+    if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = SERVICES_VIDEO_SRC;
+      video.play().catch(() => {});
+    }
+  }, [inView]);
 
   return (
     <section
+      ref={sectionRef}
       id="services"
       className="scroll-fade-section relative w-full bg-[#0A0C18] py-20 sm:py-28 overflow-hidden"
     >
+      <video
+        ref={videoRef}
+        className="absolute inset-0 w-full h-full object-cover"
+        muted
+        loop
+        playsInline
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-0 bg-[#0A0C18]/70"
+        aria-hidden="true"
+      />
       <div
         className="pointer-events-none absolute -top-40 -left-32 w-[480px] h-[480px] rounded-full bg-blue-500/10 blur-[120px]"
         aria-hidden="true"

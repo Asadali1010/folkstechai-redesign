@@ -25,7 +25,7 @@ const STEPS = [
 
 export default function Process() {
   return (
-    <section id="process" className="relative w-full bg-[#0A0C18] py-20 sm:py-28">
+    <section id="process" className="scroll-fade-section relative w-full bg-[#0A0C18] py-20 sm:py-28">
       <div className="w-full max-w-[1800px] mx-auto px-5 sm:px-8 md:px-[82px]">
         <Reveal className="max-w-[640px] mb-16 sm:mb-24">
           <p className="text-white/60 text-[13px] sm:text-[14px] font-[450] tracking-[0.08em] uppercase mb-3 sm:mb-4">

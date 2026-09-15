@@ -163,7 +163,7 @@ function ProjectRow({
 
 export default function Work() {
   return (
-    <section id="work" className="relative w-full bg-[#0A0C18] py-20 sm:py-28">
+    <section id="work" className="scroll-fade-section relative w-full bg-[#0A0C18] py-20 sm:py-28">
       <div className="w-full max-w-[1800px] mx-auto px-5 sm:px-8 md:px-[82px]">
         <div className="max-w-[640px] mb-14 sm:mb-20">
           <p className="text-white/60 text-[13px] sm:text-[14px] font-[450] tracking-[0.08em] uppercase mb-3 sm:mb-4">

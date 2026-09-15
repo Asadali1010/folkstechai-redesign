@@ -1,6 +1,11 @@
+import { useEffect, useRef } from 'react';
 import { ShieldCheck, Zap, Globe } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import Reveal from '@/components/Reveal';
+import { useInView } from '@/hooks/useInView';
+
+const WHY_VIDEO_SRC =
+  'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260815_032550_05c8a435-0fb5-41a0-ad67-c7158d7aa425.mp4';
 
 const PILLARS: { icon: LucideIcon; title: string; description: string }[] = [
   {
@@ -43,8 +48,31 @@ const TEAM = [
 ];
 
 export default function Why() {
+  const { ref: sectionRef, inView } = useInView<HTMLElement>();
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (inView) {
+      videoRef.current?.play().catch(() => {});
+    }
+  }, [inView]);
+
   return (
-    <section id="why" className="relative w-full bg-[#0A0C18] py-20 sm:py-28 overflow-hidden">
+    <section
+      ref={sectionRef}
+      id="why"
+      className="scroll-fade-section relative w-full bg-[#0A0C18] py-20 sm:py-28 overflow-hidden"
+    >
+      <video
+        ref={videoRef}
+        className="absolute inset-0 w-full h-full object-cover"
+        src={WHY_VIDEO_SRC}
+        muted
+        loop
+        playsInline
+        aria-hidden="true"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-[#0A0C18]/70" aria-hidden="true" />
       <div
         className="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full bg-blue-500/[0.06] blur-[140px]"
         aria-hidden="true"

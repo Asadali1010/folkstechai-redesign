@@ -77,7 +77,7 @@ function ProcessCard() {
 
 export default function Hero() {
   return (
-    <section className="relative w-full h-screen overflow-hidden bg-[#080A19]">
+    <section className="scroll-fade-section relative w-full h-screen overflow-hidden bg-[#080A19]">
       <video
         className="absolute inset-0 w-full h-full object-cover"
         src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260813_092641_de52eb87-daf2-41db-92cb-7a56eae012a5.mp4"
