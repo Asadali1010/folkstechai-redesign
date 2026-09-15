@@ -1,4 +1,9 @@
+import { useEffect, useRef } from 'react';
 import Reveal from '@/components/Reveal';
+import { useInView } from '@/hooks/useInView';
+
+const PROCESS_VIDEO_SRC =
+  'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260423_084718_72a17915-4964-4059-afcd-22d59399b72e.mp4';
 
 const STEPS = [
   {
@@ -24,9 +29,33 @@ const STEPS = [
 ];
 
 export default function Process() {
+  const { ref: sectionRef, inView } = useInView<HTMLElement>();
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (inView) {
+      videoRef.current?.play().catch(() => {});
+    }
+  }, [inView]);
+
   return (
-    <section id="process" className="scroll-fade-section relative w-full bg-[#0A0C18] py-20 sm:py-28">
-      <div className="w-full max-w-[1800px] mx-auto px-5 sm:px-8 md:px-[82px]">
+    <section
+      ref={sectionRef}
+      id="process"
+      className="scroll-fade-section relative w-full bg-[#0A0C18] py-20 sm:py-28 overflow-hidden"
+    >
+      <video
+        ref={videoRef}
+        className="absolute inset-0 w-full h-full object-cover"
+        src={PROCESS_VIDEO_SRC}
+        muted
+        loop
+        playsInline
+        aria-hidden="true"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-[#0A0C18]/70" aria-hidden="true" />
+
+      <div className="relative w-full max-w-[1800px] mx-auto px-5 sm:px-8 md:px-[82px]">
         <Reveal className="max-w-[640px] mb-16 sm:mb-24">
           <p className="text-white/60 text-[13px] sm:text-[14px] font-[450] tracking-[0.08em] uppercase mb-3 sm:mb-4">
             Process
