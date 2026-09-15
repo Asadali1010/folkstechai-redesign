@@ -26,27 +26,6 @@ const PILLARS: { icon: LucideIcon; title: string; description: string }[] = [
   },
 ];
 
-const TEAM = [
-  {
-    initials: 'AK',
-    name: 'Ayesha Khan',
-    role: 'Founder & CEO',
-    bio: 'Sets the vision: make trustworthy AI practical for every business.',
-  },
-  {
-    initials: 'BA',
-    name: 'Bilal Ahmed',
-    role: 'Head of Engineering',
-    bio: 'Ships production software fast — without cutting corners on quality.',
-  },
-  {
-    initials: 'SM',
-    name: 'Sana Malik',
-    role: 'Lead AI Engineer',
-    bio: 'Builds AI agents with real guardrails, evaluation, and human oversight.',
-  },
-];
-
 export default function Why() {
   const { ref: sectionRef, inView } = useInView<HTMLElement>();
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -101,31 +80,6 @@ export default function Why() {
               <p className="text-white/70 text-[14.5px] sm:text-[15px] font-[450] leading-[1.55]">
                 {pillar.description}
               </p>
-            </Reveal>
-          ))}
-        </div>
-
-        <Reveal>
-          <p className="text-white/50 text-[12px] sm:text-[13px] font-[450] tracking-[0.08em] uppercase mb-6 sm:mb-8">
-            The team
-          </p>
-        </Reveal>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
-          {TEAM.map((member, i) => (
-            <Reveal key={member.name} delay={i * 90}>
-              <div className="flex items-start gap-4">
-                <div
-                  className="flex-shrink-0 w-12 h-12 rounded-full bg-white/[0.06] border border-white/[0.1] flex items-center justify-center text-white text-[14px] font-[450]"
-                  aria-hidden="true"
-                >
-                  {member.initials}
-                </div>
-                <div>
-                  <p className="text-white text-[16px] font-[450] leading-[1.25]">{member.name}</p>
-                  <p className="text-white/50 text-[13px] font-[450] leading-[1.3] mb-2">{member.role}</p>
-                  <p className="text-white/70 text-[13.5px] font-[450] leading-[1.5]">{member.bio}</p>
-                </div>
-              </div>
             </Reveal>
           ))}
         </div>
