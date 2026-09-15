@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import Hls from 'hls.js';
 import Reveal from '@/components/Reveal';
+import { useInView } from '@/hooks/useInView';
 
 type FAQ = { question: string; answer: string };
+
+const FAQS_VIDEO_SRC = 'https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8';
 
 const FAQS: FAQ[] = [
   {
@@ -47,12 +51,48 @@ const FAQS: FAQ[] = [
 
 export default function FAQs() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const { ref: sectionRef, inView } = useInView<HTMLElement>();
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (!inView) return;
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (Hls.isSupported()) {
+      const hls = new Hls();
+      hls.loadSource(FAQS_VIDEO_SRC);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        video.play().catch(() => {});
+      });
+      return () => hls.destroy();
+    }
+
+    if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = FAQS_VIDEO_SRC;
+      video.play().catch(() => {});
+    }
+  }, [inView]);
 
   return (
     <section
+      ref={sectionRef}
       id="faqs"
       className="scroll-fade-section relative w-full bg-[#0A0C18] py-20 sm:py-28 overflow-hidden"
     >
+      <video
+        ref={videoRef}
+        className="absolute inset-0 w-full h-full object-cover"
+        muted
+        loop
+        playsInline
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-0 bg-[#0A0C18]/70"
+        aria-hidden="true"
+      />
       <div className="relative w-full max-w-[1800px] mx-auto px-5 sm:px-8 md:px-[82px]">
         <Reveal className="max-w-[640px] mb-12 sm:mb-16">
           <p className="text-white/60 text-[13px] sm:text-[14px] font-[450] tracking-[0.08em] uppercase mb-3 sm:mb-4">
