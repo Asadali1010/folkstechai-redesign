@@ -47,11 +47,19 @@ export default function Hero() {
     <section className="scroll-fade-section relative w-full h-screen overflow-hidden bg-[#080A19]">
       <video
         className="absolute inset-0 w-full h-full object-cover"
-        src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260813_092641_de52eb87-daf2-41db-92cb-7a56eae012a5.mp4"
+        src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260603_132049_036591b8-6e92-4760-b94c-a7ea6eef315c.mp4"
         autoPlay
         loop
         muted
         playsInline
+        aria-hidden="true"
+      />
+      <div
+        className="absolute inset-0 bg-gradient-to-b from-[#080A19]/80 via-[#080A19]/55 to-[#080A19]/85"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute inset-0 bg-gradient-to-r from-[#080A19]/70 via-[#080A19]/20 to-transparent lg:to-[#080A19]/10"
         aria-hidden="true"
       />
       <div className="relative z-10 h-full flex items-center py-8">
