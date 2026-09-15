@@ -280,4 +280,5 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .process-video { visibility: hidden; transform: none; }
   .process-chapter, .process-step-buttons button, .process-step-buttons svg { transition: none !important; }
+  .footer-video { visibility: hidden; }
 }
